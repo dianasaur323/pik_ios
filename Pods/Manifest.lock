@@ -1,0 +1,10 @@
+PODS:
+  - Auth0Client (0.0.12)
+
+DEPENDENCIES:
+  - Auth0Client
+
+SPEC CHECKSUMS:
+  Auth0Client: 995c4aaba1f26a07ebdc10035e280a94b394f936
+
+COCOAPODS: 0.34.4
