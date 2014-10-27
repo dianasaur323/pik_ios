@@ -12,28 +12,35 @@
 
 @interface ViewController ()
 
+@property (nonatomic)Auth0Client *client;
+
 @end
 
 @implementation ViewController
 
+-(Auth0Client *)client{
+    if(!_client) _client=[Auth0Client auth0Client:@"jellyfish.auth0.com"
+                                         clientId:@"1yOLAVx8aAO4vSwxrPOIqjWFh8SHg5fm" offlineAccess:0];
+    return _client;
+}
 
-- (IBAction)signInToSocialNetworks:(id)sender {
+- (IBAction)signInToFacebook:(id)sender {
     
-    Auth0Client *client = [Auth0Client auth0Client:@"jellyfish.auth0.com"
-                                          clientId:@"1yOLAVx8aAO4vSwxrPOIqjWFh8SHg5fm" offlineAccess:0];
+    UISwitch *loginSwitch=(UISwitch *)sender;
     
-    [client loginAsync:self withCompletionHandler:^(NSMutableDictionary* error) {
-        if (error) {
-            NSLog(@"Error authenticating: %@", [error objectForKey:@"error"]);
-        }
-        else {
-            // * Use client.auth0User to do wonderful things, e.g.:
-            // - get user email => [client.auth0User.Profile objectForKey:@"email"]
-            // - get facebook/google/twitter/etc access token => [[[client.auth0User.Profile objectForKey:@"identities"] objectAtIndex:0] objectForKey:@"access_token"]
-            // - get Windows Azure AD groups => [client.auth0User.Profile objectForKey:@"groups"]
-            // - etc.
-        }
-    }];
+    if(loginSwitch.tag==0){
+        [self.client loginAsync:self connection:@"facebook" withCompletionHandler:^(NSMutableDictionary* error)
+         {
+             /* Use client.auth0User to do wonderful things */
+         }];
+    }
+    else if(loginSwitch.tag==1){
+        [self.client loginAsync:self connection:@"linkedin" withCompletionHandler:^(NSMutableDictionary* error)
+         {
+             /* Use client.auth0User to do wonderful things */
+         }];
+    }
+    
     
 }
 
